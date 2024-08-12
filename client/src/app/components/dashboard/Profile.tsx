@@ -22,11 +22,11 @@ export const Profile = () => {
             src="Stytch_Logo.png"
           />
           <div>
-            <p className="flex gap-8 ">
-              <strong>Name</strong> {member?.firstName} {member?.lastName}
+            <p className="flex gap-8 font-[700] text-[20px] ">
+               {member?.firstName} {member?.lastName}
             </p>
-            <p className="flex gap-8">
-              <strong>Email</strong> {member?.email}
+            <p className="flex gap-2 mt-4 font-semibold">
+              <strong>Role:</strong> Owner/Admin
             </p>
           </div>
         </div>
@@ -35,7 +35,7 @@ export const Profile = () => {
       <div className=" flex mt-5 flex-col w-fill gap-5 bg-white p-6 shadow-md rounded-lg">
         <div className="flex items-center justify-between   w-full">
           <h2 className="flex text-xl font-semibold mb-4">
-            Personal information
+            Personal Information
           </h2>
           <button
             type="submit"
@@ -48,14 +48,14 @@ export const Profile = () => {
         <div className="rounded-md px-5 flex items-center   h-20  bg-gray-100">
           <div className="flex flex-col w-1/2">
             <p className="flex gap-8">
-              <strong>First Name</strong>
+              <strong>First name</strong>
             </p>
 
             <p className="flex gap-8">{member?.firstName}</p>
           </div>
           <div>
             <p className="flex gap-8">
-              <strong>Last Name</strong>
+              <strong>Last name</strong>
             </p>
 
             <p className="flex gap-8">{member?.lastName}</p>
@@ -64,7 +64,7 @@ export const Profile = () => {
         <div className="rounded-md px-5 flex items-center  h-20  bg-gray-100">
           <div className="flex flex-col w-1/2">
             <p className="flex gap-8">
-              <strong>Email Address</strong>
+              <strong>Email address</strong>
             </p>
 
             <p className="flex gap-8">{member?.email}</p>
@@ -74,7 +74,7 @@ export const Profile = () => {
               <strong>Phone</strong>
             </p>
 
-            <p className="flex gap-8">(213)55-1234</p>
+            <p className="flex gap-8">(323)355-1234</p>
           </div>
         </div>
         <div className="rounded-md px-5 gap-100 flex items-center h-20  bg-gray-100">
@@ -84,15 +84,12 @@ export const Profile = () => {
             </p>
 
             <p className="flex gap-8">
-              {member &&
-                member?.roles?.map((role) => {
-                  return `  ${role}   ,`;
-                })}
+           Owner/Admin
             </p>
           </div>
           <div>
             <p className="flex gap-8">
-              <strong>SAML Configured</strong>
+              <strong>SAML configured</strong>
             </p>
 
             <p className="flex gap-8">
@@ -123,28 +120,28 @@ export const Profile = () => {
           </div>
           <div>
             <p className="flex gap-8">
-              <strong>City/state</strong>
+              <strong>State/City</strong>
             </p>
 
-            <p className="flex gap-8">Carlifonia</p>
+            <p className="flex gap-8">California</p>
           </div>
         </div>
 
         <div className="rounded-md px-5 gap-100 flex items-center h-20  bg-gray-100">
           <div className="flex flex-col w-1/2">
             <p className="flex gap-8">
-              <strong>Postal Code</strong>
+              <strong>Postal code</strong>
             </p>
 
-            <p className="flex gap-8">ERT 62574</p>
+            <p className="flex gap-8">90210</p>
           </div>
           <div>
             <p className="flex gap-8">
-              <strong>Tax Id</strong>
+              <strong>Tax ID/EIN</strong>
             </p>
 
   < p className = "flex gap-8" >
-              AS564178969
+              95-6417899
             </p>
           </div>
         </div>

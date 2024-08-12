@@ -166,9 +166,9 @@ const SignInPage: React.FC = () => {
     <div className="flex flex-col w-full items-center justify-center bg-gray-100">
       {activeTab === "SAML" ? (
         <>
-          <div className=" w-full sm:w-[398px] bg-white p-5 rounded-t-lg shadow-md border-custom-gray">
+          <div className=" w-full sm:w-[398px] bg-white px-8 py-4 rounded-t-lg shadow-md border-custom-gray">
             <h1 className="text-[24px] font-semibold mb-6 text-center mt-6">
-              Log in with SAML
+              Sign in with SAML
             </h1>
             <div className="mb-2 border-custom-gray">
               <form onSubmit={handleSubmit(onSubmit)}>
@@ -192,7 +192,7 @@ const SignInPage: React.FC = () => {
                   type="submit"
                   className={`${
                     isValid && "bg-[#19303d]"
-                  } bg-[#13e5c0] mt-5 flex font-bold justify-center items-center w-full  text-white py-2 px-4 rounded-md shadow-sm hover:bg-[#19303d] focus:outline-none focus:ring-2  focus:ring-offset-2 h-[47px]`}
+                  } mb-6 mt-2 flex font-[500] justify-center items-center w-full  text-white py-2 px-4 rounded-md shadow-sm bg-[#19303d] focus:outline-none focus:ring-2  focus:ring-offset-2 h-[47px]`}
                 >
                   {loading ? <Spinner /> : "Sign In"}
                 </button>
@@ -214,7 +214,7 @@ const SignInPage: React.FC = () => {
       </div>
 
       <button
-        className={`h-[47px] py-2 text-[#fff] font-[800] px-4 rounded w-full sm:w-[398px] bg-[#13e5c0]`}
+        className={`h-[47px] py-2 font-[500] px-4 rounded w-full sm:w-[398px] border-gray-300 border bg-gray-200`}
         onClick={() => setActiveTab(activeTab === "SAML" ? "Stytch" : "SAML")}
       >
         {activeTab === "SAML"

@@ -146,8 +146,17 @@ export const Settings = () => {
             </form>
           </div>
         ) : (
-          <div className="h-full flex-col items-center  flex font-bold justify-center w-full text-white py-2 rounded-md ">
-            <IoSettings color="#13e5c0" size={200} />
+          <div className="h-full flex-col items-center  flex font-bold justify-center w-full py-2 rounded-md ">
+            <IoSettings color="#606060" size={100} />
+          
+            <p className="flex text-[25px] gap-8 mt-5">
+              Enable SAML configuration 
+            </p>
+
+            <p className="flex font-normal gap-8 text-center">
+              Enable SAML SSO for your organization using an identity provider like Okta, Entra ID, or Google.
+            </p>
+          
             <button
               onClick={() => setShowSAMLForm(true)}
               type="submit"
@@ -175,7 +184,7 @@ export const Settings = () => {
               }
               title="Click to copy"
             >
-              {organization.stytchAcsUrl}
+              {organization?.stytchAcsUrl}
             </div>
           </div>
 
@@ -189,7 +198,7 @@ export const Settings = () => {
               onClick={() => copyToClipboard(organization.stytchAudienceUrl)}
               title="Click to copy"
             >
-              {organization.stytchAudienceUrl}
+              {organization?.stytchAudienceUrl}
             </div>
           </div>
 

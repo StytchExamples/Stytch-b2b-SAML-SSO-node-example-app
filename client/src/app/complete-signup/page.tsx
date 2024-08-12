@@ -102,7 +102,7 @@ const SignUpPage: React.FC = () => {
     <div className="flex w-full items-center justify-center  bg-gray-100">
       <div className="max-w-md w-[350px] bg-white p-5 rounded-lg shadow-md">
         <h1 className="text-2xl font-bold mb-6 text-center">
-          Complete Sign up
+          Complete sign up
         </h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex gap-5">
