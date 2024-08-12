@@ -194,7 +194,7 @@ const SignInPage: React.FC = () => {
                     isValid && "bg-[#19303d]"
                   } mb-6 mt-2 flex font-[500] justify-center items-center w-full  text-white py-2 px-4 rounded-md shadow-sm bg-[#19303d] focus:outline-none focus:ring-2  focus:ring-offset-2 h-[47px]`}
                 >
-                  {loading ? <Spinner /> : "Sign In"}
+                  {loading ? <Spinner /> : "Sign in"}
                 </button>
               </form>
             </div>
