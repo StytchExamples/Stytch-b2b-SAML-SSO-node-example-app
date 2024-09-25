@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import {
   AuthFlowType,
   B2BProducts,
@@ -8,19 +8,42 @@ import {
   StytchEventType,
 } from "@stytch/vanilla-js";
 import { StytchB2B } from "@stytch/nextjs/b2b";
-import { useRouter } from "next/navigation";
 import { axiosInstance } from "../utils";
+import Cookies from "js-cookie";
 
-const Discovery = () => {
-  const [config, setConfig] = useState<StytchB2BUIConfig | null>();
-  const router = useRouter();
+const Authenticate = () => {
+  const [tokenType, setTokenType] = useState("");
+
+  const config: StytchB2BUIConfig = {
+    products: [B2BProducts.emailMagicLinks],
+    sessionOptions: { sessionDurationMinutes: 60 },
+    authFlowType: AuthFlowType.Discovery,
+  };
 
   useEffect(() => {
-    setConfig({
-      products: [B2BProducts.emailMagicLinks],
-      sessionOptions: { sessionDurationMinutes: 60 },
-      authFlowType: AuthFlowType.Discovery,
-    });
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get("token");
+    const tokenType = params.get("stytch_token_type");
+    setTokenType(tokenType as string);
+    if (tokenType === "sso") {
+      axiosInstance
+        .get(`/authenticate?token=${token}`)
+        .then((data) => {
+          Cookies.set("stytch_session_jwt", data.data.SessionJWT, {
+            secure: true,
+            sameSite: "Strict",
+          });
+          Cookies.set("stytch_session", data.data.SessionToken, {
+            secure: true,
+            sameSite: "Strict",
+          });
+
+          window.location.href = "http://localhost:3000/dashboard";
+        })
+        .catch((error) => {
+          console.log({ error });
+        });
+    }
   }, []);
 
   const styles = {
@@ -64,46 +87,37 @@ const Discovery = () => {
     },
   };
 
-  return config ? (
-    <div className="bg-[red] flex flex-col w-full items-center justify-center bg-gray-100">
-      <StytchB2B
-        styles={styles}
-        config={config}
-        callbacks={{
-          onEvent: async ({
-            type,
-            data,
-          }: {
-            type: StytchEventType;
-            data: any;
-          }) => {
-            if (
-              type ===
-                StytchEventType.B2BDiscoveryIntermediateSessionExchange ||
-              type === StytchEventType.B2BDiscoveryOrganizationsCreate ||
-              type === StytchEventType.B2BMagicLinkDiscoveryAuthenticate ||
-              type === StytchEventType.B2BSSOAuthenticate
-            ) {
-              if (data && data.member) {
-                axiosInstance
-                  .get(`/member/${data.member.member_id}`)
-                  .then((resp) => {
-                    if (!resp.data.member) {
-                      router.push("/complete-signup");
-                    } else {
-                      router.push("/dashboard");
-                    }
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                  });
+  return tokenType === "discovery" ? (
+    <Suspense fallback={<div>Loading...</div>}>
+      <div className="bg-[red] flex flex-col w-full items-center justify-center bg-gray-100">
+        <StytchB2B
+          styles={styles}
+          config={config}
+          callbacks={{
+            onEvent: async ({
+              type,
+              data,
+            }: {
+              type: StytchEventType;
+              data: any;
+            }) => {
+              if (
+                type ===
+                  StytchEventType.B2BDiscoveryIntermediateSessionExchange ||
+                type === StytchEventType.B2BDiscoveryOrganizationsCreate ||
+                type === StytchEventType.B2BMagicLinkDiscoveryAuthenticate ||
+                type === StytchEventType.B2BSSOAuthenticate
+              ) {
+                if (data && data.member) {
+                  window.location.href = "http://localhost:3000/dashboard";
+                }
               }
-            }
-          },
-        }}
-      />
-    </div>
+            },
+          }}
+        />
+      </div>
+    </Suspense>
   ) : null;
 };
 
-export default Discovery;
+export default Authenticate;

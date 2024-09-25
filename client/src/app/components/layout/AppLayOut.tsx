@@ -2,18 +2,11 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { FaBars } from "react-icons/fa";
 import { useStytchMemberSession, useStytchB2BClient } from "@stytch/nextjs/b2b";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store/reducers";
-import { usePathname } from "next/navigation";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
-  const dispatch = useDispatch();
+  const [activeSection, setActiveSection] = useState("Profile");
   const { session } = useStytchMemberSession();
-  const activeSection = useSelector(
-    (state: RootState) => state.dashboardReducer.activeSection
-  );
-  const location = usePathname();
 
   const stytchB2BClient = useStytchB2BClient();
   const handleLogout = async () => {
@@ -25,12 +18,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const toggleActiveScreen = (screen: string) => {
-    dispatch({
-      type: "SET_DASHBOARD_INTERFACE",
-      payload: { activeSection: screen },
-    });
-  };
   return (
     <div style={{ maxWidth: "100%" }} className=" flex flex-col min-h-screen">
       {/* Header */}
@@ -47,21 +34,12 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             </h1>
           </div>
 
-          {session ? (
+          {session && (
             <div
               onClick={handleLogout}
               className="hidden  md:flex space-x-4 font-bold cursor-pointer"
             >
               Logout
-            </div>
-          ) : (
-            <div className="hidden text-[#fff] md:flex space-x-4 font-bold">
-              <Link
-                className="hover:underline"
-                href={location === "/signup" ? "/" : "/signup"}
-              >
-                {location === "/signup" ? "Sign In" : "Sign Up"}
-              </Link>
             </div>
           )}
 
@@ -79,7 +57,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             <>
               <p
                 onClick={() =>
-                  toggleActiveScreen(
+                  setActiveSection(
                     activeSection === "Profile" ? "Settings" : "Profile"
                   )
                 }
